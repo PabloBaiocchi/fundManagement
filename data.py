@@ -9,9 +9,9 @@ def getSpreadsheetAuth():
   spreadsheetAuth=gspread.authorize(GoogleCredentials.get_application_default())
   return spreadsheetAuth
 
-def getCashFlowFrame(spreadsheetAuth,sheet_url):
+def getCashFlowFrame(spreadsheetAuth,sheet_url,sheet_name):
   sheet=spreadsheetAuth.open_by_url(sheet_url)
-  frame=get_as_dataframe(sheet.worksheet('Sheet1'))
+  frame=get_as_dataframe(sheet.worksheet(sheet_name))
   frame=frame.dropna(how='all')
   frame=frame.dropna(axis='columns',how='all')
   frame['date'] = pd.to_datetime(frame['date'], format='%Y-%m-%d')
