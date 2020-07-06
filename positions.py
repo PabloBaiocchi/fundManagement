@@ -40,4 +40,5 @@ def getOpenPositions(positions,cashFlows):
         rows.append([asset,currentAmount,priceTotal/currentAmount,addonTotal/currentAmount])
     openPositions=pd.DataFrame(rows)
     openPositions.columns=['asset','amount','ppc','addons_per_share']
+    openPositions['invested_capital']=(openPositions.ppc+openPositions.addons_per_share)*openPositions.amount
     return openPositions
