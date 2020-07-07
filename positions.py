@@ -19,7 +19,8 @@ def getAllPositions(cashFlows):
     positions.columns=['asset','amount','margin']
     return positions
 
-def getOpenPositions(positions,cashFlows):
+def getOpenPositions(cashFlows):
+    positions=getAllPositions(cashFlows)
     currentPositions=positions[positions.amount>0]
     rows=[]
     for asset in currentPositions.asset:
@@ -37,8 +38,9 @@ def getOpenPositions(positions,cashFlows):
             addonTotal=addonTotal+row.addons
             currentAmount=currentAmount-row.amount
         currentAmount=positions[positions.asset==asset].iloc[0].amount
-        rows.append([asset,currentAmount,priceTotal/currentAmount,addonTotal/currentAmount])
+        category=assetBuys.iloc[0].category
+        rows.append([asset,category,currentAmount,priceTotal/currentAmount,addonTotal/currentAmount])
     openPositions=pd.DataFrame(rows)
-    openPositions.columns=['asset','amount','ppc','addons_per_share']
+    openPositions.columns=['asset','category','amount','ppc','addons_per_share']
     openPositions['invested_capital']=(openPositions.ppc+openPositions.addons_per_share)*openPositions.amount
     return openPositions
