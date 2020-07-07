@@ -1,4 +1,5 @@
-import pandas as pd
+import pandas as 
+import numpy as np
 
 def getAllPositions(cashFlows):
   buySells=cashFlows[cashFlows.type.isin(['buy','sell'])].copy()
