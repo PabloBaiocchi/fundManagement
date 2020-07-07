@@ -51,6 +51,8 @@ def getAvgBuy(currentPosition):
 
 def getAvgSell(currentPosition):
   sells=currentPosition[currentPosition.type=='sell']
+  if len(sells)==0:
+      return 0
   return sells.total.sum()/sells.amount.sum()
 
 def getAmountHeld(currentPosition):
