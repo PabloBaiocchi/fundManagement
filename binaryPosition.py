@@ -42,3 +42,11 @@ class BinaryPosition:
     asset['invested_capital']=asset['invested_capital']-asset['ppc']*amount
     asset['amount']=asset['amount']-amount
     asset['current_margin']=asset['current_margin']+(priceReceived-asset['ppc'])*amount
+
+def ratio(self):
+    totalCapital=self.assets['put']['invested_capital']+self.assets['call']['invested_capital']
+    callPercent=self.assets['call']['invested_capital']/totalCapital
+    return {
+        'call': callPercent,
+        'put': 1-callPercent
+    }
