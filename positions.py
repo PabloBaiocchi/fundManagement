@@ -62,6 +62,9 @@ def marginOnSold(currentPosition):
   amountSold=currentPosition[currentPosition.type=='sell'].amount.sum()
   return (getAvgSell(currentPosition)-getAvgBuy(currentPosition))*amountSold
 
+def getCategory(currentPosition):
+  return currentPosition.iloc[0].category
+
 def getOpenPositions(cashFlows):
   assets=cashFlows[cashFlows.type=='buy'].asset.unique()
   rows=[]
@@ -74,9 +77,10 @@ def getOpenPositions(cashFlows):
     avgSell=getAvgSell(currentPosition)
     amountHeld=getAmountHeld(currentPosition)
     currentMargin=marginOnSold(currentPosition)
-    rows.append([asset,amountHeld,ppc,avgBuy,avgSell,currentMargin])
+    category=getCategory(currentPosition)
+    rows.append([asset,category,amountHeld,ppc,avgBuy,avgSell,currentMargin])
   frame=pd.DataFrame(rows)
-  frame.columns=['asset','amount','ppc','avg_buy','avg_sell','current_margin']
+  frame.columns=['asset','category','amount','ppc','avg_buy','avg_sell','current_margin']
   frame['invested_capital']=frame.ppc*frame.amount
   return frame
     
