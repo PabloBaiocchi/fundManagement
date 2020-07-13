@@ -22,12 +22,12 @@ class BinaryPosition:
     def putTargetPrice(self,callPrice):
         put=self.assets['put']
         call=self.assets['call']
-        return (put['invested_capital']+call['invested_capital']-call['current_margin']-put['current_margin']-call['amount']*callPrice*(1-self.commission))/put['amount']/(1-self.commission)
+        return (put['invested_capital']+call['invested_capital']+call['current_margin']+put['current_margin']-call['amount']*callPrice*(1-self.commission))/put['amount']/(1-self.commission)
 
     def callTargetPrice(self,putPrice):
         put=self.assets['put']
         call=self.assets['call']
-        return (put['invested_capital']+call['invested_capital']-call['current_margin']-put['current_margin']-put['amount']*putPrice*(1-self.commission))/call['amount']/(1-self.commission)
+        return (put['invested_capital']+call['invested_capital']+call['current_margin']+put['current_margin']-put['amount']*putPrice*(1-self.commission))/call['amount']/(1-self.commission)
 
     def buy(self,type,amount,price):
         pricePaid=price*(1+self.commission)
