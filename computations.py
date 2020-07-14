@@ -9,3 +9,13 @@ def getCommission(commissionsDf,broker,category,multiday=True):
   if multiday:
     return filtered.multiday.sum()
   return filtered.intraday.sum()
+
+def sell(asset,price,amount,broker,commissionsDf):
+  commission=getCommission(commissionsDf,broker,asset.category)
+  priceReceived=price*(1-commission)
+  percentProfit=priceReceived/asset.ppc-1
+  profit=(priceReceived-asset.ppc)*amount
+  return {
+      'percent_profit':percentProfit,
+      'profit':profit
+  }
